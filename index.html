@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Your Name — Software Engineer</title>
+<meta name="description" content="Software engineer with 8+ years building enterprise backend systems, cloud-native solutions and full-stack products. C# (.NET), AWS, Google Cloud.">
+
+<!-- ============================================================
+     HOW TO MAINTAIN THIS FILE
+     1. Search for "EDIT:" comments — those mark everything you
+        should personalise (name, links, projects).
+     2. Colours & fonts live in the :root block below.
+     3. Each section is wrapped in clear comments, e.g.
+        SECTION: PROJECTS. Copy an existing card to add a new one.
+     ============================================================ -->
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..800&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+
+<style>
+/* ================= DESIGN TOKENS ================= */
+:root{
+  --paper:      #F5F7F9;   /* page background            */
+  --panel:      #FFFFFF;   /* cards                      */
+  --ink:        #131C26;   /* primary text               */
+  --ink-soft:   #4B5866;   /* secondary text             */
+  --line:       #DCE2E8;   /* hairlines / borders        */
+  --accent:     #1747C6;   /* cobalt — links & highlights*/
+  --accent-ink: #0E2E80;   /* darker cobalt on hover     */
+  --ok:         #0E7A4A;   /* "active" status green      */
+
+  --font-display: "Archivo", sans-serif;
+  --font-body:    "IBM Plex Sans", sans-serif;
+  --font-mono:    "IBM Plex Mono", monospace;
+
+  --w: 880px;              /* content width              */
+}
+
+*{ margin:0; padding:0; box-sizing:border-box; }
+html{ scroll-behavior:smooth; }
+@media (prefers-reduced-motion: reduce){
+  html{ scroll-behavior:auto; }
+  *, *::before, *::after{ animation:none !important; transition:none !important; }
+}
+
+body{
+  background:var(--paper);
+  color:var(--ink);
+  font-family:var(--font-body);
+  font-size:16px;
+  line-height:1.65;
+  -webkit-font-smoothing:antialiased;
+}
+
+.wrap{ max-width:var(--w); margin:0 auto; padding:0 24px; }
+
+a{ color:var(--accent); text-decoration:none; border-bottom:1px solid transparent; }
+a:hover{ color:var(--accent-ink); border-bottom-color:currentColor; }
+a:focus-visible, button:focus-visible{
+  outline:2px solid var(--accent); outline-offset:3px; border-radius:2px;
+}
+
+/* mono label used everywhere */
+.tag{
+  font-family:var(--font-mono);
+  font-size:12px;
+  letter-spacing:.08em;
+  text-transform:uppercase;
+  color:var(--ink-soft);
+}
+
+/* ================= HEADER / NAV ================= */
+header{
+  border-bottom:1px solid var(--line);
+  background:var(--paper);
+  position:sticky; top:0; z-index:10;
+}
+.nav{
+  display:flex; align-items:center; justify-content:space-between;
+  height:56px;
+}
+.nav .brand{ font-family:var(--font-mono); font-size:13px; color:var(--ink); border:none; }
+.nav ul{ display:flex; gap:22px; list-style:none; }
+.nav ul a{ font-size:13.5px; color:var(--ink-soft); border:none; }
+.nav ul a:hover{ color:var(--accent); }
+
+/* ================= HERO ================= */
+.hero{ padding:72px 0 56px; }
+.hero .tag{ color:var(--accent); margin-bottom:14px; display:block; }
+.hero h1{
+  font-family:var(--font-display);
+  font-weight:800;
+  font-stretch:112%;
+  font-size:clamp(40px, 7vw, 66px);
+  line-height:1.02;
+  letter-spacing:-0.015em;
+  margin-bottom:18px;
+}
+.hero p.lede{
+  max-width:620px;
+  font-size:17.5px;
+  color:var(--ink-soft);
+  margin-bottom:28px;
+}
+.hero p.lede strong{ color:var(--ink); font-weight:600; }
+
+.facts{
+  display:flex; flex-wrap:wrap; gap:10px 28px;
+  font-family:var(--font-mono); font-size:13px; color:var(--ink-soft);
+}
+.facts span b{ color:var(--ink); font-weight:500; }
+
+.hero-links{ margin-top:30px; display:flex; gap:12px; flex-wrap:wrap; }
+.btn{
+  display:inline-block;
+  font-family:var(--font-mono); font-size:13px;
+  padding:10px 18px;
+  border:1px solid var(--ink); border-radius:3px;
+  color:var(--ink); background:transparent;
+}
+.btn:hover{ background:var(--ink); color:var(--paper); border-bottom-color:var(--ink); }
+.btn.primary{ background:var(--accent); border-color:var(--accent); color:#fff; }
+.btn.primary:hover{ background:var(--accent-ink); border-color:var(--accent-ink); color:#fff; }
+
+/* ================= SECTIONS ================= */
+section{ padding:56px 0; border-top:1px solid var(--line); }
+.sec-head{
+  display:flex; align-items:baseline; gap:16px; margin-bottom:34px;
+}
+.sec-head h2{
+  font-family:var(--font-display);
+  font-weight:700; font-stretch:106%;
+  font-size:26px; letter-spacing:-0.01em;
+}
+.sec-head .tag{ color:var(--accent); }
+
+/* ================= PROJECTS ================= */
+.project{
+  background:var(--panel);
+  border:1px solid var(--line);
+  border-radius:6px;
+  padding:28px;
+  margin-bottom:20px;
+}
+.project h3{
+  font-family:var(--font-display); font-weight:700; font-size:20px;
+  margin-bottom:4px;
+}
+.project .stack{
+  font-family:var(--font-mono); font-size:12.5px; color:var(--accent);
+  margin-bottom:12px;
+}
+.project p{ color:var(--ink-soft); max-width:640px; }
+.project .links{ margin-top:14px; font-size:14px; display:flex; gap:18px; }
+
+/* ================= EXPERIENCE (service-log style) ================= */
+.role{
+  display:grid;
+  grid-template-columns:190px 1fr;
+  gap:24px;
+  padding:26px 0;
+  border-bottom:1px solid var(--line);
+}
+.role:last-child{ border-bottom:none; }
+.role .when{
+  font-family:var(--font-mono); font-size:13px; color:var(--ink-soft);
+  line-height:1.9;
+}
+.role .when .status{
+  display:inline-block; font-size:11px; letter-spacing:.08em;
+  padding:1px 8px; border-radius:20px;
+  border:1px solid var(--ok); color:var(--ok);
+}
+.role h3{ font-family:var(--font-display); font-weight:700; font-size:18px; }
+.role .org{ color:var(--ink-soft); font-size:14.5px; margin-bottom:10px; }
+.role ul{ list-style:none; }
+.role ul li{
+  color:var(--ink-soft); font-size:15px; padding-left:18px; position:relative;
+  margin-bottom:6px;
+}
+.role ul li::before{
+  content:"–"; position:absolute; left:0; color:var(--accent);
+}
+
+/* ================= SKILLS ================= */
+.skills{ display:grid; grid-template-columns:repeat(auto-fit, minmax(230px,1fr)); gap:14px; }
+.skill-group{
+  background:var(--panel); border:1px solid var(--line); border-radius:6px; padding:20px;
+}
+.skill-group .tag{ display:block; margin-bottom:10px; color:var(--accent); }
+.skill-group p{ font-size:14.5px; color:var(--ink-soft); line-height:1.8; }
+
+/* ================= FOOTER ================= */
+footer{ border-top:1px solid var(--line); padding:48px 0 64px; }
+footer .big{
+  font-family:var(--font-display); font-weight:700; font-size:24px; margin-bottom:8px;
+}
+footer p{ color:var(--ink-soft); font-size:15px; }
+footer .foot-links{ margin-top:18px; display:flex; gap:20px; font-size:14.5px; }
+footer .fine{ margin-top:40px; font-family:var(--font-mono); font-size:12px; color:var(--ink-soft); }
+
+/* ================= RESPONSIVE ================= */
+@media (max-width:640px){
+  .role{ grid-template-columns:1fr; gap:8px; }
+  .nav ul{ gap:14px; }
+  section{ padding:44px 0; }
+}
+</style>
+</head>
+<body>
+
+<!-- ================= NAV ================= -->
+<header>
+  <div class="wrap nav">
+    <!-- EDIT: your name or handle -->
+    <a class="brand" href="#top">your.name</a>
+    <nav aria-label="Main">
+      <ul>
+        <li><a href="#projects">Projects</a></li>
+        <li><a href="#experience">Experience</a></li>
+        <li><a href="#skills">Skills</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<!-- ================= SECTION: HERO ================= -->
+<main id="top">
+  <div class="wrap hero">
+    <span class="tag">Software Engineer · Singapore</span>
+    <!-- EDIT: your name -->
+    <h1>Your Name</h1>
+    <p class="lede">
+      I build <strong>enterprise backend systems</strong> and cloud-native solutions —
+      8+ years across <strong>C# (.NET)</strong>, AWS and Google Cloud, from
+      high-volume data pipelines to full-stack products people use every day.
+    </p>
+    <div class="facts">
+      <span><b>8+</b> yrs experience</span>
+      <span><b>C# / .NET</b> core stack</span>
+      <span><b>AWS · GCP</b> cloud</span>
+      <span><b>SQL Server · MySQL · BigQuery</b></span>
+    </div>
+    <div class="hero-links">
+      <!-- EDIT: replace # with your real links -->
+      <a class="btn primary" href="#projects">View projects</a>
+      <a class="btn" href="https://github.com/yourusername">GitHub</a>
+      <a class="btn" href="https://linkedin.com/in/yourusername">LinkedIn</a>
+      <a class="btn" href="resume.pdf">Résumé</a>
+    </div>
+  </div>
+
+  <!-- ================= SECTION: PROJECTS ================= -->
+  <section id="projects">
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="tag">01</span>
+        <h2>Selected projects</h2>
+      </div>
+
+      <!-- EDIT: Project card — copy this block to add more projects -->
+      <article class="project">
+        <h3>TripSplit</h3>
+        <div class="stack">React → standalone PWA · Capacitor · Excel export</div>
+        <p>
+          A bill-splitting app for group travel: multiple trips, multi-currency
+          handling, four split modes, receipt photos, settlement history and
+          Excel export. Built as a React app, then converted into a single-file
+          installable PWA, with a Capacitor pipeline for the iOS and Android
+          app stores.
+        </p>
+        <div class="links">
+          <a href="#">Live demo</a>
+          <a href="#">Source</a>
+          <a href="#">Case study</a>
+        </div>
+      </article>
+
+      <article class="project">
+        <h3>Invoicing &amp; accounting platform</h3>
+        <div class="stack">PWA · Nginx on CentOS · MariaDB · PDF &amp; Excel</div>
+        <p>
+          A mobile-first invoicing and accounting system built for a real
+          cleaning-services company — dashboard, invoice management, PDF
+          export, Excel import/export and a customer directory. In daily
+          production use for running the business.
+        </p>
+        <div class="links">
+          <a href="#">Case study</a>
+        </div>
+      </article>
+
+      <article class="project">
+        <h3>High-volume wager data pipeline</h3>
+        <div class="stack">C# · Kafka · MySQL · BigQuery · WebSocket</div>
+        <p>
+          Backend services for a real-time wagering platform: Kafka consumers
+          in C#, MySQL stored procedures, BigQuery analytics and WebSocket
+          push to the UI. Work included resolving MERGE concurrency conflicts
+          and production crash debugging in high-throughput streams.
+        </p>
+        <div class="links">
+          <a href="#">Write-up</a>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <!-- ================= SECTION: EXPERIENCE ================= -->
+  <section id="experience">
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="tag">02</span>
+        <h2>Experience</h2>
+      </div>
+
+      <article class="role">
+        <div class="when">
+          2023 — present<br>
+          <span class="status">ACTIVE</span>
+        </div>
+        <div>
+          <h3>Software Engineer</h3>
+          <div class="org">Morpheus Consulting Pte Ltd · Singapore</div>
+          <ul>
+            <li>Engineer and maintain scalable C# (.NET) backend services for mission-critical enterprise applications.</li>
+            <li>Build responsive ReactJS interfaces integrated with backend APIs.</li>
+            <li>Design and tune SQL Server and MySQL schemas, stored procedures and queries for high-data-volume systems.</li>
+            <li>Lead API development and system-integration projects across distributed services.</li>
+            <li>Resolve critical production bottlenecks, significantly improving uptime.</li>
+          </ul>
+        </div>
+      </article>
+
+      <article class="role">
+        <div class="when">2021 — 2022</div>
+        <div>
+          <h3>Full Stack Developer</h3>
+          <div class="org">Decision Science Agency Pte Ltd</div>
+          <ul>
+            <li>Developed web applications with ASP.NET, ReactJS and NodeJS.</li>
+            <li>Architected PostgreSQL and DynamoDB database structures.</li>
+            <li>Ran containerised workloads on AWS ECS/EKS with Terraform-managed infrastructure.</li>
+            <li>Deployed AWS GCC networking and security: VPC, Lambda, CloudFormation.</li>
+          </ul>
+        </div>
+      </article>
+
+      <article class="role">
+        <div class="when">2016 — 2021</div>
+        <div>
+          <h3>Process &amp; Software Engineer</h3>
+          <div class="org">MentorMedia Ltd</div>
+          <ul>
+            <li>Technical consultant for in-house process optimisation and shopfloor support systems.</li>
+            <li>Built VB.NET and C# solutions automating SAP GUI integrations for vendors and customers.</li>
+            <li>Oversaw server specifications and industrial hardware support.</li>
+          </ul>
+        </div>
+      </article>
+
+      <article class="role">
+        <div class="when">2016</div>
+        <div>
+          <h3>Software Engineer</h3>
+          <div class="org">Opspeed Solutions Pte Ltd</div>
+          <ul>
+            <li>Software and server maintenance, domain management, and customer-specific customisation.</li>
+          </ul>
+        </div>
+      </article>
+
+      <article class="role">
+        <div class="when">2015</div>
+        <div>
+          <h3>Software Engineer &amp; IT Executive</h3>
+          <div class="org">Tomypak Flexible Packaging Sdn Bhd</div>
+          <ul>
+            <li>Full-spectrum IT operations: ERP (Navision) support, server maintenance, FortiGate firewall investigation.</li>
+          </ul>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <!-- ================= SECTION: SKILLS ================= -->
+  <section id="skills">
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="tag">03</span>
+        <h2>Technical expertise</h2>
+      </div>
+      <div class="skills">
+        <div class="skill-group">
+          <span class="tag">Languages</span>
+          <p>C# (advanced) · VB.NET (advanced) · ASP.NET · SQL · Java · VBA</p>
+        </div>
+        <div class="skill-group">
+          <span class="tag">Cloud &amp; DevOps</span>
+          <p>Google Cloud · AWS (GCC) · Docker · Kubernetes (EKS) · Terraform · GitLab</p>
+        </div>
+        <div class="skill-group">
+          <span class="tag">Databases</span>
+          <p>SQL Server · MySQL · PostgreSQL · BigQuery · DynamoDB · MongoDB · Redis</p>
+        </div>
+        <div class="skill-group">
+          <span class="tag">Web &amp; Integration</span>
+          <p>ReactJS · NodeJS · REST APIs · RabbitMQ · SAP GUI integration</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= SECTION: EDUCATION ================= -->
+  <section id="education">
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="tag">04</span>
+        <h2>Education</h2>
+      </div>
+      <article class="role">
+        <div class="when">2013</div>
+        <div>
+          <h3>Diploma in Business Application</h3>
+          <div class="org">Republic Polytechnic · Singapore</div>
+          <ul>
+            <li>Key focus: Database Systems (A), Mathematics II (A), Programming, Data Communications &amp; Networking.</li>
+          </ul>
+        </div>
+      </article>
+    </div>
+  </section>
+</main>
+
+<!-- ================= SECTION: CONTACT / FOOTER ================= -->
+<footer id="contact">
+  <div class="wrap">
+    <div class="big">Let's talk.</div>
+    <p>Open to backend and full-stack engineering opportunities.</p>
+    <div class="foot-links">
+      <!-- EDIT: replace with your real contact links -->
+      <a href="mailto:you@example.com">you@example.com</a>
+      <a href="https://github.com/yourusername">GitHub</a>
+      <a href="https://linkedin.com/in/yourusername">LinkedIn</a>
+    </div>
+    <p class="fine">© 2026 · Built by hand, hosted on GitHub Pages</p>
+  </div>
+</footer>
+
+</body>
+</html>
