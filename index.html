@@ -2,48 +2,28 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Nicole Goh — Software Engineer</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta
       name="description"
-      content="Software engineer with 8+ years building enterprise backend systems, cloud-native solutions and full-stack products. C# (.NET), AWS, Google Cloud."
+      content="Software Engineer with 8+ years building enterprise backend systems and cloud-native solutions — C# (.NET), AWS, Google Cloud, ReactJS."
     />
-
-    <!-- ============================================================
-     HOW TO MAINTAIN THIS FILE
-     1. Search for "EDIT:" comments — those mark everything you
-        should personalise (name, links, projects).
-     2. Colours & fonts live in the :root block below.
-     3. Each section is wrapped in clear comments, e.g.
-        SECTION: PROJECTS. Copy an existing card to add a new one.
-     ============================================================ -->
-
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..800&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap"
-      rel="stylesheet"
-    />
-
+    <title>Nic — Software Engineer</title>
     <style>
-      /* ================= DESIGN TOKENS ================= */
       :root {
-        --paper: #f5f7f9; /* page background            */
-        --panel: #ffffff; /* cards                      */
-        --ink: #131c26; /* primary text               */
-        --ink-soft: #4b5866; /* secondary text             */
-        --line: #dce2e8; /* hairlines / borders        */
-        --accent: #1747c6; /* cobalt — links & highlights*/
-        --accent-ink: #0e2e80; /* darker cobalt on hover     */
-        --ok: #0e7a4a; /* "active" status green      */
-
-        --font-display: "Archivo", sans-serif;
-        --font-body: "IBM Plex Sans", sans-serif;
-        --font-mono: "IBM Plex Mono", monospace;
-
-        --w: 880px; /* content width              */
+        --bg: #0d1117;
+        --bg-alt: #11161f;
+        --card: #161d29;
+        --line: #232c3b;
+        --text: #c9d3e0;
+        --text-dim: #7d8a9c;
+        --head: #eef3f9;
+        --accent: #f5a623; /* warm amber */
+        --accent-soft: rgba(245, 166, 35, 0.12);
+        --mono: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
+        --sans:
+          -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+          "Helvetica Neue", Arial, sans-serif;
       }
-
       * {
         margin: 0;
         padding: 0;
@@ -52,41 +32,25 @@
       html {
         scroll-behavior: smooth;
       }
-      @media (prefers-reduced-motion: reduce) {
-        html {
-          scroll-behavior: auto;
-        }
-        *,
-        *::before,
-        *::after {
-          animation: none !important;
-          transition: none !important;
-        }
-      }
-
       body {
-        background: var(--paper);
-        color: var(--ink);
-        font-family: var(--font-body);
-        font-size: 16px;
+        background: var(--bg);
+        color: var(--text);
+        font-family: var(--sans);
         line-height: 1.65;
+        font-size: 16px;
         -webkit-font-smoothing: antialiased;
       }
-
-      .wrap {
-        max-width: var(--w);
-        margin: 0 auto;
-        padding: 0 24px;
+      ::selection {
+        background: var(--accent);
+        color: #0d1117;
       }
 
       a {
         color: var(--accent);
         text-decoration: none;
-        border-bottom: 1px solid transparent;
       }
       a:hover {
-        color: var(--accent-ink);
-        border-bottom-color: currentColor;
+        text-decoration: underline;
       }
       a:focus-visible,
       button:focus-visible {
@@ -95,593 +59,955 @@
         border-radius: 2px;
       }
 
-      /* mono label used everywhere */
-      .tag {
-        font-family: var(--font-mono);
-        font-size: 12px;
-        letter-spacing: 0.08em;
-        text-transform: uppercase;
-        color: var(--ink-soft);
-      }
-
-      /* ================= HEADER / NAV ================= */
+      /* ---------- Nav ---------- */
       header {
-        border-bottom: 1px solid var(--line);
-        background: var(--paper);
-        position: sticky;
+        position: fixed;
         top: 0;
-        z-index: 10;
-      }
-      .nav {
+        left: 0;
+        right: 0;
+        z-index: 50;
         display: flex;
         align-items: center;
         justify-content: space-between;
-        height: 56px;
+        padding: 0 40px;
+        height: 68px;
+        background: rgba(13, 17, 23, 0.85);
+        backdrop-filter: blur(10px);
+        border-bottom: 1px solid transparent;
+        transition: border-color 0.3s;
       }
-      .nav .brand {
-        font-family: var(--font-mono);
-        font-size: 13px;
-        color: var(--ink);
-        border: none;
+      header.scrolled {
+        border-bottom-color: var(--line);
       }
-      .nav ul {
-        display: flex;
-        gap: 22px;
-        list-style: none;
+      .logo {
+        font-family: var(--mono);
+        font-size: 18px;
+        font-weight: 700;
+        color: var(--head);
       }
-      .nav ul a {
-        font-size: 13.5px;
-        color: var(--ink-soft);
-        border: none;
-      }
-      .nav ul a:hover {
+      .logo span {
         color: var(--accent);
+      }
+      nav ul {
+        display: flex;
+        list-style: none;
+        gap: 30px;
+        align-items: center;
+      }
+      nav a {
+        font-family: var(--mono);
+        font-size: 13px;
+        color: var(--text);
+      }
+      nav a:hover {
+        color: var(--accent);
+        text-decoration: none;
+      }
+      nav a .n {
+        color: var(--accent);
+        margin-right: 4px;
+      }
+      .resume-btn {
+        border: 1px solid var(--accent);
+        border-radius: 4px;
+        padding: 8px 16px;
+        color: var(--accent);
+        font-family: var(--mono);
+        font-size: 13px;
+      }
+      .resume-btn:hover {
+        background: var(--accent-soft);
+        text-decoration: none;
+      }
+      .burger {
+        display: none;
+        background: none;
+        border: none;
+        color: var(--accent);
+        font-size: 26px;
+        cursor: pointer;
       }
 
-      /* ================= HERO ================= */
-      .hero {
-        padding: 72px 0 56px;
+      /* ---------- Layout ---------- */
+      main {
+        max-width: 1040px;
+        margin: 0 auto;
+        padding: 0 40px;
       }
-      .hero .tag {
+      section {
+        padding: 90px 0;
+      }
+      .sec-title {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        font-size: 26px;
+        color: var(--head);
+        margin-bottom: 38px;
+        white-space: nowrap;
+      }
+      .sec-title .n {
+        font-family: var(--mono);
         color: var(--accent);
-        margin-bottom: 14px;
-        display: block;
+        font-size: 19px;
+        font-weight: 400;
       }
-      .hero h1 {
-        font-family: var(--font-display);
-        font-weight: 800;
-        font-stretch: 112%;
-        font-size: clamp(40px, 7vw, 66px);
-        line-height: 1.02;
-        letter-spacing: -0.015em;
+      .sec-title::after {
+        content: "";
+        height: 1px;
+        background: var(--line);
+        width: 100%;
+        max-width: 300px;
+      }
+
+      /* ---------- Hero ---------- */
+      .hero {
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        padding-top: 68px;
+      }
+      .hero .hello {
+        font-family: var(--mono);
+        color: var(--accent);
+        font-size: 15px;
         margin-bottom: 18px;
       }
-      .hero p.lede {
-        max-width: 620px;
-        font-size: 17.5px;
-        color: var(--ink-soft);
-        margin-bottom: 28px;
+      .hero h1 {
+        font-size: clamp(38px, 7vw, 68px);
+        color: var(--head);
+        line-height: 1.05;
+        letter-spacing: -1px;
       }
-      .hero p.lede strong {
-        color: var(--ink);
+      .hero h2 {
+        font-size: clamp(24px, 4.5vw, 44px);
+        color: var(--text-dim);
+        line-height: 1.1;
+        margin-top: 8px;
+        letter-spacing: -1px;
+      }
+      .hero p {
+        max-width: 560px;
+        margin-top: 24px;
+        color: var(--text-dim);
+        font-size: 17px;
+      }
+      .hero p strong {
+        color: var(--text);
         font-weight: 600;
       }
-
-      .facts {
+      .hero .cta {
+        margin-top: 44px;
         display: flex;
-        flex-wrap: wrap;
-        gap: 10px 28px;
-        font-family: var(--font-mono);
-        font-size: 13px;
-        color: var(--ink-soft);
-      }
-      .facts span b {
-        color: var(--ink);
-        font-weight: 500;
-      }
-
-      .hero-links {
-        margin-top: 30px;
-        display: flex;
-        gap: 12px;
+        gap: 18px;
         flex-wrap: wrap;
       }
       .btn {
         display: inline-block;
-        font-family: var(--font-mono);
-        font-size: 13px;
-        padding: 10px 18px;
-        border: 1px solid var(--ink);
-        border-radius: 3px;
-        color: var(--ink);
-        background: transparent;
+        border: 1px solid var(--accent);
+        border-radius: 4px;
+        padding: 14px 26px;
+        color: var(--accent);
+        font-family: var(--mono);
+        font-size: 14px;
       }
       .btn:hover {
-        background: var(--ink);
-        color: var(--paper);
-        border-bottom-color: var(--ink);
+        background: var(--accent-soft);
+        text-decoration: none;
       }
-      .btn.primary {
+      .btn.solid {
         background: var(--accent);
-        border-color: var(--accent);
-        color: #fff;
+        color: #10151d;
+        font-weight: 600;
       }
-      .btn.primary:hover {
-        background: var(--accent-ink);
-        border-color: var(--accent-ink);
-        color: #fff;
+      .btn.solid:hover {
+        filter: brightness(1.1);
       }
 
-      /* ================= SECTIONS ================= */
-      section {
-        padding: 56px 0;
-        border-top: 1px solid var(--line);
-      }
-      .sec-head {
-        display: flex;
-        align-items: baseline;
-        gap: 16px;
-        margin-bottom: 34px;
-      }
-      .sec-head h2 {
-        font-family: var(--font-display);
-        font-weight: 700;
-        font-stretch: 106%;
-        font-size: 26px;
-        letter-spacing: -0.01em;
-      }
-      .sec-head .tag {
-        color: var(--accent);
-      }
-
-      /* ================= PROJECTS ================= */
-      .project {
-        background: var(--panel);
-        border: 1px solid var(--line);
-        border-radius: 6px;
-        padding: 28px;
-        margin-bottom: 20px;
-      }
-      .project h3 {
-        font-family: var(--font-display);
-        font-weight: 700;
-        font-size: 20px;
-        margin-bottom: 4px;
-      }
-      .project .stack {
-        font-family: var(--font-mono);
-        font-size: 12.5px;
-        color: var(--accent);
-        margin-bottom: 12px;
-      }
-      .project p {
-        color: var(--ink-soft);
-        max-width: 640px;
-      }
-      .project .links {
-        margin-top: 14px;
-        font-size: 14px;
-        display: flex;
-        gap: 18px;
-      }
-
-      /* ================= EXPERIENCE (service-log style) ================= */
-      .role {
+      /* ---------- About ---------- */
+      .about-grid {
         display: grid;
-        grid-template-columns: 190px 1fr;
-        gap: 24px;
-        padding: 26px 0;
-        border-bottom: 1px solid var(--line);
+        grid-template-columns: 3fr 2fr;
+        gap: 50px;
+        align-items: start;
       }
-      .role:last-child {
-        border-bottom: none;
+      .about-grid p {
+        margin-bottom: 16px;
+        color: var(--text-dim);
       }
-      .role .when {
-        font-family: var(--font-mono);
+      .about-grid p b {
+        color: var(--text);
+      }
+      .fact-card {
+        background: var(--card);
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        padding: 26px;
+      }
+      .fact-card h3 {
+        font-family: var(--mono);
         font-size: 13px;
-        color: var(--ink-soft);
-        line-height: 1.9;
+        color: var(--accent);
+        margin-bottom: 16px;
+        font-weight: 400;
       }
-      .role .when .status {
-        display: inline-block;
-        font-size: 11px;
-        letter-spacing: 0.08em;
-        padding: 1px 8px;
-        border-radius: 20px;
-        border: 1px solid var(--ok);
-        color: var(--ok);
-      }
-      .role h3 {
-        font-family: var(--font-display);
-        font-weight: 700;
-        font-size: 18px;
-      }
-      .role .org {
-        color: var(--ink-soft);
-        font-size: 14.5px;
-        margin-bottom: 10px;
-      }
-      .role ul {
+      .fact-card ul {
         list-style: none;
       }
-      .role ul li {
-        color: var(--ink-soft);
-        font-size: 15px;
-        padding-left: 18px;
-        position: relative;
-        margin-bottom: 6px;
+      .fact-card li {
+        display: flex;
+        justify-content: space-between;
+        gap: 10px;
+        padding: 9px 0;
+        border-bottom: 1px solid var(--line);
+        font-size: 14px;
       }
-      .role ul li::before {
-        content: "–";
+      .fact-card li:last-child {
+        border-bottom: none;
+      }
+      .fact-card li span:first-child {
+        color: var(--text-dim);
+      }
+      .fact-card li span:last-child {
+        color: var(--head);
+        text-align: right;
+      }
+
+      /* ---------- Skills ---------- */
+      .skills-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 20px;
+      }
+      .skill-col {
+        background: var(--card);
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        padding: 24px;
+        transition:
+          transform 0.2s,
+          border-color 0.2s;
+      }
+      .skill-col:hover {
+        transform: translateY(-4px);
+        border-color: var(--accent);
+      }
+      .skill-col h3 {
+        font-size: 15px;
+        color: var(--head);
+        margin-bottom: 14px;
+      }
+      .skill-col ul {
+        list-style: none;
+      }
+      .skill-col li {
+        font-family: var(--mono);
+        font-size: 13px;
+        color: var(--text-dim);
+        padding: 4px 0;
+      }
+      .skill-col li::before {
+        content: "▸ ";
+        color: var(--accent);
+      }
+
+      /* ---------- Experience ---------- */
+      .job {
+        position: relative;
+        padding: 0 0 44px 34px;
+        border-left: 1px solid var(--line);
+      }
+      .job:last-child {
+        padding-bottom: 0;
+      }
+      .job::before {
+        content: "";
+        position: absolute;
+        left: -6px;
+        top: 6px;
+        width: 11px;
+        height: 11px;
+        border-radius: 50%;
+        background: var(--bg);
+        border: 2px solid var(--accent);
+      }
+      .job h3 {
+        font-size: 18px;
+        color: var(--head);
+      }
+      .job h3 .company {
+        color: var(--accent);
+      }
+      .job .period {
+        font-family: var(--mono);
+        font-size: 13px;
+        color: var(--text-dim);
+        margin: 4px 0 14px;
+      }
+      .job ul {
+        list-style: none;
+      }
+      .job li {
+        position: relative;
+        padding: 3px 0 3px 22px;
+        color: var(--text-dim);
+        font-size: 15px;
+      }
+      .job li::before {
+        content: "▸";
         position: absolute;
         left: 0;
         color: var(--accent);
       }
 
-      /* ================= SKILLS ================= */
-      .skills {
+      /* ---------- Projects ---------- */
+      .proj-grid {
         display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
-        gap: 14px;
+        grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
+        gap: 22px;
       }
-      .skill-group {
-        background: var(--panel);
+      .proj {
+        background: var(--card);
         border: 1px solid var(--line);
-        border-radius: 6px;
-        padding: 20px;
+        border-radius: 8px;
+        padding: 28px;
+        display: flex;
+        flex-direction: column;
+        transition:
+          transform 0.2s,
+          border-color 0.2s;
       }
-      .skill-group .tag {
-        display: block;
-        margin-bottom: 10px;
+      .proj:hover {
+        transform: translateY(-5px);
+        border-color: var(--accent);
+      }
+      .proj .top {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 16px;
+      }
+      .proj .folder {
+        font-size: 34px;
+        line-height: 1;
+      }
+      .proj .links a {
+        color: var(--text-dim);
+        font-size: 18px;
+        margin-left: 12px;
+      }
+      .proj .links a:hover {
         color: var(--accent);
+        text-decoration: none;
       }
-      .skill-group p {
-        font-size: 14.5px;
-        color: var(--ink-soft);
-        line-height: 1.8;
+      .proj h3 {
+        font-size: 18px;
+        color: var(--head);
+        margin-bottom: 10px;
       }
-
-      /* ================= FOOTER ================= */
-      footer {
-        border-top: 1px solid var(--line);
-        padding: 48px 0 64px;
+      .proj p {
+        font-size: 14px;
+        color: var(--text-dim);
+        flex: 1;
       }
-      footer .big {
-        font-family: var(--font-display);
-        font-weight: 700;
-        font-size: 24px;
-        margin-bottom: 8px;
-      }
-      footer p {
-        color: var(--ink-soft);
-        font-size: 15px;
-      }
-      footer .foot-links {
+      .proj .tags {
         margin-top: 18px;
         display: flex;
-        gap: 20px;
-        font-size: 14.5px;
+        flex-wrap: wrap;
+        gap: 10px;
       }
-      footer .fine {
-        margin-top: 40px;
-        font-family: var(--font-mono);
+      .proj .tags span {
+        font-family: var(--mono);
         font-size: 12px;
-        color: var(--ink-soft);
+        color: var(--accent);
       }
 
-      /* ================= RESPONSIVE ================= */
-      @media (max-width: 640px) {
-        .role {
-          grid-template-columns: 1fr;
-          gap: 8px;
+      /* ---------- Education / Languages ---------- */
+      .edu-lang {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 22px;
+      }
+      .edu-card {
+        background: var(--card);
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        padding: 28px;
+      }
+      .edu-card h3 {
+        color: var(--head);
+        font-size: 17px;
+        margin-bottom: 4px;
+      }
+      .edu-card .period {
+        font-family: var(--mono);
+        font-size: 13px;
+        color: var(--text-dim);
+        margin-bottom: 14px;
+      }
+      .edu-card p {
+        font-size: 14px;
+        color: var(--text-dim);
+      }
+      .lang-row {
+        display: flex;
+        justify-content: space-between;
+        padding: 8px 0;
+        border-bottom: 1px solid var(--line);
+        font-size: 14px;
+      }
+      .lang-row:last-child {
+        border-bottom: none;
+      }
+      .lang-row span:last-child {
+        color: var(--accent);
+        font-family: var(--mono);
+        font-size: 13px;
+      }
+
+      /* ---------- Contact ---------- */
+      .contact {
+        text-align: center;
+        max-width: 600px;
+        margin: 0 auto;
+      }
+      .contact .n {
+        font-family: var(--mono);
+        color: var(--accent);
+        font-size: 15px;
+      }
+      .contact h2 {
+        font-size: clamp(30px, 5vw, 44px);
+        color: var(--head);
+        margin: 12px 0 20px;
+      }
+      .contact p {
+        color: var(--text-dim);
+        margin-bottom: 40px;
+      }
+      .socials {
+        margin-top: 44px;
+        display: flex;
+        justify-content: center;
+        gap: 26px;
+      }
+      .socials a {
+        font-family: var(--mono);
+        font-size: 14px;
+        color: var(--text-dim);
+      }
+      .socials a:hover {
+        color: var(--accent);
+        text-decoration: none;
+      }
+
+      footer {
+        text-align: center;
+        padding: 28px;
+        font-family: var(--mono);
+        font-size: 12px;
+        color: var(--text-dim);
+        border-top: 1px solid var(--line);
+      }
+
+      /* ---------- Reveal on scroll ---------- */
+      .reveal {
+        opacity: 0;
+        transform: translateY(22px);
+        transition:
+          opacity 0.6s ease,
+          transform 0.6s ease;
+      }
+      .reveal.on {
+        opacity: 1;
+        transform: none;
+      }
+      @media (prefers-reduced-motion: reduce) {
+        html {
+          scroll-behavior: auto;
         }
-        .nav ul {
-          gap: 14px;
+        .reveal {
+          opacity: 1;
+          transform: none;
+          transition: none;
+        }
+        .skill-col:hover,
+        .proj:hover {
+          transform: none;
+        }
+      }
+
+      /* ---------- Mobile ---------- */
+      @media (max-width: 860px) {
+        .skills-grid {
+          grid-template-columns: repeat(2, 1fr);
+        }
+        .about-grid {
+          grid-template-columns: 1fr;
+        }
+        .edu-lang {
+          grid-template-columns: 1fr;
+        }
+      }
+      @media (max-width: 700px) {
+        header {
+          padding: 0 22px;
+        }
+        main {
+          padding: 0 24px;
+        }
+        nav ul {
+          position: fixed;
+          inset: 68px 0 auto 0;
+          flex-direction: column;
+          gap: 0;
+          background: var(--bg-alt);
+          border-bottom: 1px solid var(--line);
+          max-height: 0;
+          overflow: hidden;
+          transition: max-height 0.3s ease;
+        }
+        nav ul.open {
+          max-height: 420px;
+        }
+        nav li {
+          width: 100%;
+          text-align: center;
+        }
+        nav a {
+          display: block;
+          padding: 16px;
+        }
+        .burger {
+          display: block;
+        }
+        .skills-grid {
+          grid-template-columns: 1fr;
         }
         section {
-          padding: 44px 0;
+          padding: 70px 0;
         }
       }
     </style>
   </head>
   <body>
-    <!-- ================= NAV ================= -->
-    <header>
-      <div class="wrap nav">
-        <!-- EDIT: your name or handle -->
-        <a class="brand" href="#top">Nicole Goh</a>
-        <nav aria-label="Main">
-          <ul>
-            <li><a href="#projects">Projects</a></li>
-            <li><a href="#experience">Experience</a></li>
-            <li><a href="#skills">Skills</a></li>
-            <li><a href="#contact">Contact</a></li>
-          </ul>
-        </nav>
-      </div>
+    <header id="header">
+      <a class="logo" href="#top">&gt; nic<span>_</span></a>
+      <nav>
+        <button
+          class="burger"
+          aria-label="Toggle menu"
+          onclick="document.getElementById('navlinks').classList.toggle('open')"
+        >
+          ☰
+        </button>
+        <ul id="navlinks">
+          <li>
+            <a href="#about"><span class="n">01.</span>About</a>
+          </li>
+          <li>
+            <a href="#skills"><span class="n">02.</span>Skills</a>
+          </li>
+          <li>
+            <a href="#experience"><span class="n">03.</span>Experience</a>
+          </li>
+          <li>
+            <a href="#projects"><span class="n">04.</span>Projects</a>
+          </li>
+          <li>
+            <a href="#contact"><span class="n">05.</span>Contact</a>
+          </li>
+          <li>
+            <a
+              class="resume-btn"
+              href="resume.pdf"
+              target="_blank"
+              rel="noopener"
+              >Resume</a
+            >
+          </li>
+        </ul>
+      </nav>
     </header>
 
-    <!-- ================= SECTION: HERO ================= -->
     <main id="top">
-      <div class="wrap hero">
-        <span class="tag">Software Engineer · Singapore</span>
-        <!-- EDIT: your name -->
+      <!-- ============ HERO ============ -->
+      <section class="hero">
+        <p class="hello">Hi, my name is</p>
         <h1>Nicole Goh</h1>
-        <p class="lede">
-          I build <strong>enterprise backend systems</strong> and cloud-native
-          solutions — more than 5 years across <strong>C# (.NET)</strong>, AWS
-          and Google Cloud, from high-volume data pipelines to full-stack
-          products people use every day.
+        <!-- <h2>I build enterprise systems that scale.</h2> -->
+        <p>
+          Software Engineer with <strong>8+ years</strong> of experience
+          architecting high-volume backend systems and cloud-native solutions —
+          bridging <strong>C# (.NET)</strong>,
+          <strong>AWS &amp; Google Cloud</strong>, and
+          <strong>ReactJS</strong> with DevOps best practices to ship resilient,
+          production-grade software.
         </p>
-        <div class="facts">
-          <span><b>more than 5</b> yrs experience</span>
-          <span><b>C# / .NET</b> core stack</span>
-          <span><b>AWS · GCP</b> cloud</span>
-          <span><b>SQL Server · MySQL · BigQuery</b></span>
+        <div class="cta">
+          <a class="btn solid" href="#projects">View my work</a>
+          <a class="btn" href="#contact">Get in touch</a>
         </div>
-        <div class="hero-links">
-          <!-- EDIT: replace # with your real links -->
-          <a class="btn primary" href="#projects">View projects</a>
-          <a class="btn" href="https://github.com/yourusername">GitHub</a>
-          <a class="btn" href="https://linkedin.com/in/yourusername"
-            >LinkedIn</a
-          >
-          <a class="btn" href="resume.pdf">Resume</a>
-        </div>
-      </div>
+      </section>
 
-      <!-- ================= SECTION: PROJECTS ================= -->
-      <section id="projects">
-        <div class="wrap">
-          <div class="sec-head">
-            <span class="tag">01</span>
-            <h2>Selected projects</h2>
+      <!-- ============ ABOUT ============ -->
+      <section id="about" class="reveal">
+        <h2 class="sec-title"><span class="n">01.</span>About Me</h2>
+        <div class="about-grid">
+          <div>
+            <p>
+              I'm a software engineer based in <b>Singapore</b> who has spent
+              the years building the systems businesses run on — from shopfloor
+              automation and SAP integrations in manufacturing, to containerized
+              AWS platforms, to the mission-critical .NET services.
+            </p>
+            <p>
+              My core strength is the <b>backend</b>: designing schemas and
+              stored procedures that stay fast under heavy load, untangling
+              production bottlenecks, and integrating distributed services so
+              data flows with integrity. But I'm equally comfortable up the
+              stack in <b>ReactJS</b> and down the stack in
+              <b>Docker, Kubernetes and Terraform</b>.
+            </p>
           </div>
+          <div class="fact-card">
+            <h3>// quick_facts</h3>
+            <ul>
+              <li><span>Location</span><span>Singapore</span></li>
+              <li><span>Experience</span><span>8+ years</span></li>
+              <li><span>Core stack</span><span>C# / .NET</span></li>
+              <li><span>Cloud</span><span>AWS · GCP</span></li>
+              <li><span>Frontend</span><span>ReactJS</span></li>
+              <li><span>Status</span><span>Open to opportunities</span></li>
+            </ul>
+          </div>
+        </div>
+      </section>
 
-          <!-- EDIT: Project card — copy this block to add more projects -->
-          <article class="project">
+      <!-- ============ SKILLS ============ -->
+      <section id="skills" class="reveal">
+        <h2 class="sec-title"><span class="n">02.</span>Technical Expertise</h2>
+        <div class="skills-grid">
+          <div class="skill-col">
+            <h3>Languages</h3>
+            <ul>
+              <li>C#</li>
+              <li>VB.NET</li>
+              <li>ASP.NET</li>
+              <li>ASP.NET CORE</li>
+              <li>SQL</li>
+              <li>Java</li>
+              <li>VBA</li>
+            </ul>
+          </div>
+          <div class="skill-col">
+            <h3>Cloud &amp; DevOps</h3>
+            <ul>
+              <li>Google Cloud</li>
+              <li>AWS (GCC)</li>
+              <li>Docker</li>
+              <li>Kubernetes (EKS)</li>
+              <li>Terraform</li>
+              <li>GitLab / SVN</li>
+            </ul>
+          </div>
+          <div class="skill-col">
+            <h3>Databases</h3>
+            <ul>
+              <li>SQL Server</li>
+              <li>MySQL</li>
+              <li>PostgreSQL</li>
+              <li>BigQuery</li>
+              <li>MongoDB / Redis</li>
+            </ul>
+          </div>
+          <div class="skill-col">
+            <h3>Web &amp; Integration</h3>
+            <ul>
+              <li>ReactJS</li>
+              <li>NodeJS</li>
+              <li>REST APIs</li>
+              <li>RabbitMQ</li>
+              <li>SAP GUI Integration</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ EXPERIENCE ============ -->
+      <section id="experience" class="reveal">
+        <h2 class="sec-title"><span class="n">03.</span>Where I've Worked</h2>
+
+        <div class="job">
+          <h3>
+            Software Engineer
+            <span class="company">@ Morpheus Consulting Pte Ltd</span>
+          </h3>
+          <p class="period">2023 — Present</p>
+          <ul>
+            <li>
+              Engineer and maintain scalable C# (.NET) backend services for
+              mission-critical enterprise applications.
+            </li>
+            <li>
+              Develop responsive ReactJS interfaces integrated with backend APIs
+              for seamless user experiences.
+            </li>
+            <li>
+              Design and refine complex SQL Server and MySQL schemas, stored
+              procedures and queries for high-volume workloads.
+            </li>
+            <li>
+              Lead API development and system integration, ensuring
+              high-integrity data flow across distributed services.
+            </li>
+            <li>
+              Resolve critical production bottlenecks and failures,
+              significantly improving uptime.
+            </li>
+          </ul>
+        </div>
+
+        <div class="job">
+          <h3>
+            Full Stack Developer
+            <span class="company">@ Decision Science Agency Pte Ltd</span>
+          </h3>
+          <p class="period">Dec 2021 — Dec 2022</p>
+          <ul>
+            <li>
+              Developed high-performance web applications with ASP.NET, ReactJS
+              and NodeJS.
+            </li>
+            <li>
+              Architected PostgreSQL and DynamoDB database structures following
+              enterprise methodologies.
+            </li>
+            <li>
+              Orchestrated containerized environments on AWS (ECS/EKS) with
+              Infrastructure as Code via Terraform.
+            </li>
+            <li>
+              Deployed AWS GCC networking and security features including VPC,
+              Lambda and CloudFormation.
+            </li>
+          </ul>
+        </div>
+
+        <div class="job">
+          <h3>
+            Process &amp; Software Engineer
+            <span class="company">@ MentorMedia Ltd</span>
+          </h3>
+          <p class="period">Apr 2016 — Oct 2021</p>
+          <ul>
+            <li>
+              Technical consultant for in-house process optimization and
+              shopfloor support systems.
+            </li>
+            <li>
+              Engineered VB.NET and C# solutions automating SAP GUI integrations
+              for vendors and customers.
+            </li>
+            <li>
+              Managed hardware-software synergy across server specifications and
+              industrial hardware support.
+            </li>
+          </ul>
+        </div>
+
+        <div class="job">
+          <h3>
+            Software Engineer
+            <span class="company">@ Opspeed Solutions Pte Ltd</span>
+          </h3>
+          <p class="period">Jan 2016 — Apr 2016</p>
+          <ul>
+            <li>
+              Provided software and server maintenance alongside domain
+              management.
+            </li>
+            <li>
+              Customized software to specific customer requirements with related
+              hardware support.
+            </li>
+          </ul>
+        </div>
+
+        <div class="job">
+          <h3>
+            Software Engineer &amp; IT Executive
+            <span class="company">@ Tomypak Flexible Packaging Sdn Bhd</span>
+          </h3>
+          <p class="period">Jul 2015 — Dec 2015</p>
+          <ul>
+            <li>
+              Managed full-spectrum IT operations including ERP (Navision)
+              support and server maintenance.
+            </li>
+            <li>
+              Conducted FortiGate firewall investigations and maintained
+              corporate IT asset documentation.
+            </li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- ============ PROJECTS ============ -->
+      <section id="projects" class="reveal">
+        <h2 class="sec-title"><span class="n">04.</span>Things I've Built</h2>
+        <div class="proj-grid">
+          <div class="proj">
+            <div class="top">
+              <span class="folder">🗂️</span>
+              <span class="links"><!-- add live/repo links here later --></span>
+            </div>
             <h3>TripSplit</h3>
-            <div class="stack">
-              React → standalone PWA · Capacitor · Excel export
-            </div>
             <p>
-              A bill-splitting app for group travel: multiple trips,
-              multi-currency handling, four split modes, receipt photos,
-              settlement history and Excel export. Built as a React app, then
-              converted into a single-file installable PWA, with a Capacitor
-              pipeline for the iOS and Android app stores.
+              A bill-splitting mobile app for group travel — multi-trip and
+              multi-currency support, four split modes, receipt photos,
+              settlement history and Excel export. Built as a PWA and packaged
+              for iOS and Android app stores via Capacitor.
             </p>
-            <div class="links">
-              <a href="#">Live demo</a>
-              <a href="#">Source</a>
-              <a href="#">Case study</a>
+            <div class="tags">
+              <span>React</span><span>PWA</span><span>Capacitor</span>
             </div>
-          </article>
-
-          <article class="project">
-            <h3>Invoicing &amp; accounting platform</h3>
-            <div class="stack">
-              PWA · Nginx on CentOS · MariaDB · PDF &amp; Excel
-            </div>
-            <p>
-              A mobile-first invoicing and accounting system built for a real
-              cleaning-services company — dashboard, invoice management, PDF
-              export, Excel import/export and a customer directory. In daily
-              production use for running the business.
-            </p>
-            <div class="links">
-              <a href="#">Case study</a>
-            </div>
-          </article>
-
-          <article class="project">
-            <h3>High-volume wager data pipeline</h3>
-            <div class="stack">C# · Kafka · MySQL · BigQuery · WebSocket</div>
-            <p>
-              Backend services for a real-time wagering platform: Kafka
-              consumers in C#, MySQL stored procedures, BigQuery analytics and
-              WebSocket push to the UI. Work included resolving MERGE
-              concurrency conflicts and production crash debugging in
-              high-throughput streams.
-            </p>
-            <div class="links">
-              <a href="#">Write-up</a>
-            </div>
-          </article>
-        </div>
-      </section>
-
-      <!-- ================= SECTION: EXPERIENCE ================= -->
-      <section id="experience">
-        <div class="wrap">
-          <div class="sec-head">
-            <span class="tag">02</span>
-            <h2>Experience</h2>
           </div>
 
-          <article class="role">
-            <div class="when">
-              2023 — present<br />
-              <span class="status">ACTIVE</span>
+          <div class="proj">
+            <div class="top">
+              <span class="folder">🧾</span>
+              <span class="links"></span>
             </div>
-            <div>
-              <h3>Software Engineer</h3>
-              <div class="org">Morpheus Consulting Pte Ltd · Singapore</div>
-              <ul>
-                <li>
-                  Engineer and maintain scalable C# (.NET) backend services for
-                  mission-critical enterprise applications.
-                </li>
-                <li>
-                  Build responsive ReactJS interfaces integrated with backend
-                  APIs.
-                </li>
-                <li>
-                  Design and tune SQL Server and MySQL schemas, stored
-                  procedures and queries for high-data-volume systems.
-                </li>
-                <li>
-                  Lead API development and system-integration projects across
-                  distributed services.
-                </li>
-                <li>
-                  Resolve critical production bottlenecks, significantly
-                  improving uptime.
-                </li>
-              </ul>
+            <h3>Invoicing &amp; Accounting Platform</h3>
+            <p>
+              A mobile-first invoicing and accounting system used daily by a
+              real cleaning-services business — dashboard, invoice management,
+              PDF export, Excel import/export and customer directory. Deployed
+              on Linux/Nginx with a MariaDB schema ready for backend expansion.
+            </p>
+            <div class="tags">
+              <span>HTML/JS</span><span>PWA</span><span>Nginx</span
+              ><span>MariaDB</span>
             </div>
-          </article>
-
-          <article class="role">
-            <div class="when">2021 — 2022</div>
-            <div>
-              <h3>Full Stack Developer</h3>
-              <div class="org">Decision Science Agency Pte Ltd</div>
-              <ul>
-                <li>
-                  Developed web applications with ASP.NET, ReactJS and NodeJS.
-                </li>
-                <li>
-                  Architected PostgreSQL and DynamoDB database structures.
-                </li>
-                <li>
-                  Ran containerised workloads on AWS ECS/EKS with
-                  Terraform-managed infrastructure.
-                </li>
-                <li>
-                  Deployed AWS GCC networking and security: VPC, Lambda,
-                  CloudFormation.
-                </li>
-              </ul>
-            </div>
-          </article>
-
-          <article class="role">
-            <div class="when">2016 — 2021</div>
-            <div>
-              <h3>Process &amp; Software Engineer</h3>
-              <div class="org">MentorMedia Ltd</div>
-              <ul>
-                <li>
-                  Technical consultant for in-house process optimisation and
-                  shopfloor support systems.
-                </li>
-                <li>
-                  Built VB.NET and C# solutions automating SAP GUI integrations
-                  for vendors and customers.
-                </li>
-                <li>
-                  Oversaw server specifications and industrial hardware support.
-                </li>
-              </ul>
-            </div>
-          </article>
-
-          <article class="role">
-            <div class="when">2016</div>
-            <div>
-              <h3>Software Engineer</h3>
-              <div class="org">Opspeed Solutions Pte Ltd</div>
-              <ul>
-                <li>
-                  Software and server maintenance, domain management, and
-                  customer-specific customisation.
-                </li>
-              </ul>
-            </div>
-          </article>
-
-          <article class="role">
-            <div class="when">2015</div>
-            <div>
-              <h3>Software Engineer &amp; IT Executive</h3>
-              <div class="org">Tomypak Flexible Packaging Sdn Bhd</div>
-              <ul>
-                <li>
-                  Full-spectrum IT operations: ERP (Navision) support, server
-                  maintenance, FortiGate firewall investigation.
-                </li>
-              </ul>
-            </div>
-          </article>
-        </div>
-      </section>
-
-      <!-- ================= SECTION: SKILLS ================= -->
-      <section id="skills">
-        <div class="wrap">
-          <div class="sec-head">
-            <span class="tag">03</span>
-            <h2>Technical skills</h2>
           </div>
-          <div class="skills">
-            <div class="skill-group">
-              <span class="tag">Languages</span>
-              <p>C# · VB.NET · ASP.NET · SQL · Java · VBA</p>
+
+          <div class="proj">
+            <div class="top">
+              <span class="folder">⚙️</span>
+              <span class="links"></span>
             </div>
-            <div class="skill-group">
-              <span class="tag">Cloud &amp; DevOps</span>
-              <p>
-                Google Cloud · AWS (GCC) · Docker · Kubernetes (EKS) · Terraform
-                · GitLab
-              </p>
-            </div>
-            <div class="skill-group">
-              <span class="tag">Databases</span>
-              <p>
-                SQL Server · MySQL · PostgreSQL · BigQuery · DynamoDB · MongoDB
-                · Redis
-              </p>
-            </div>
-            <div class="skill-group">
-              <span class="tag">Web &amp; Integration</span>
-              <p>
-                ReactJS · NodeJS · REST APIs · RabbitMQ · SAP GUI integration
-              </p>
+            <h3>SAP GUI Automation Suite</h3>
+            <p>
+              Custom automation tooling that integrated vendor and customer
+              workflows directly with SAP GUI, eliminating repetitive manual
+              data entry for manufacturing operations teams.
+            </p>
+            <div class="tags">
+              <span>C#</span><span>VB.NET</span><span>SAP</span>
             </div>
           </div>
         </div>
       </section>
 
-      <!-- ================= SECTION: EDUCATION ================= -->
-      <section id="education">
-        <div class="wrap">
-          <div class="sec-head">
-            <span class="tag">04</span>
-            <h2>Education</h2>
+      <!-- ============ EDUCATION ============ -->
+      <section id="education" class="reveal">
+        <h2 class="sec-title">
+          <span class="n">05.</span>Education &amp; Languages
+        </h2>
+        <div class="edu-lang">
+          <div class="edu-card">
+            <h3>Diploma in Business Application</h3>
+            <p class="period">Republic Polytechnic · 2013</p>
+            <p>
+              Key focus areas: Database Systems (A), Mathematics II (A),
+              Introduction to Programming (B+), Data Communications &amp;
+              Networking (B+).
+            </p>
           </div>
-          <article class="role">
-            <div class="when">2013</div>
-            <div>
-              <h3>Diploma in Business Application</h3>
-              <div class="org">Republic Polytechnic · Singapore</div>
-              <ul>
-                <li>
-                  Key focus: Database Systems (A), Mathematics II (A),
-                  Programming, Data Communications &amp; Networking.
-                </li>
-              </ul>
+          <div class="edu-card">
+            <h3>Languages</h3>
+            <p class="period">&nbsp;</p>
+            <div class="lang-row">
+              <span>English</span><span>Intermediate</span>
             </div>
-          </article>
+            <div class="lang-row">
+              <span>Chinese</span><span>Intermediate</span>
+            </div>
+            <div class="lang-row">
+              <span>Malay</span><span>Intermediate</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ CONTACT ============ -->
+      <section id="contact" class="reveal">
+        <div class="contact">
+          <p class="n">06. What's next?</p>
+          <h2>Get In Touch</h2>
+          <p>
+            I'm always open to discussing new opportunities, interesting
+            projects, or ways to make systems faster and more resilient. My
+            inbox is open — say hello.
+          </p>
+          <a class="btn" href="mailto:your.email@example.com">Say Hello</a>
+          <div class="socials">
+            <a href="https://github.com/nicgyc" target="_blank" rel="noopener"
+              >GitHub</a
+            >
+            <a
+              href="https://www.linkedin.com/in/nicole-goh-b8169120b"
+              target="_blank"
+              rel="noopener"
+              >LinkedIn</a
+            >
+            <a href="mailto:nic.1992@hotmail.com">Email</a>
+          </div>
         </div>
       </section>
     </main>
 
-    <!-- ================= SECTION: CONTACT / FOOTER ================= -->
-    <footer id="contact">
-      <div class="wrap">
-        <div class="big">Let's talk.</div>
-        <p>Open to backend and full-stack engineering opportunities.</p>
-        <div class="foot-links">
-          <!-- EDIT: replace with your real contact links -->
-          <a href="mailto:nic.1992@hotmail.com">nic.1992@hotmail.com</a>
-          <a href="https://github.com/nicgyc">GitHub</a>
-          <a href="https://www.linkedin.com/in/nicole-goh-b8169120b"
-            >LinkedIn</a
-          >
-        </div>
-        <p class="fine">© 2026 · Built by hand, hosted on GitHub Pages</p>
-      </div>
+    <footer>
+      Designed &amp; built by Nic ·
+      <a
+        href="https://github.com/nicgyc/nicgyc.github.io"
+        target="_blank"
+        rel="noopener"
+        >view source</a
+      >
     </footer>
+
+    <script>
+      // Sticky header border on scroll
+      const header = document.getElementById("header");
+      addEventListener("scroll", () =>
+        header.classList.toggle("scrolled", scrollY > 10),
+      );
+
+      // Close mobile menu when a link is tapped
+      document
+        .querySelectorAll("#navlinks a")
+        .forEach((a) =>
+          a.addEventListener("click", () =>
+            document.getElementById("navlinks").classList.remove("open"),
+          ),
+        );
+
+      // Reveal sections on scroll
+      const io = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((e) => {
+            if (e.isIntersecting) {
+              e.target.classList.add("on");
+              io.unobserve(e.target);
+            }
+          });
+        },
+        { threshold: 0.12 },
+      );
+      document.querySelectorAll(".reveal").forEach((el) => io.observe(el));
+    </script>
   </body>
 </html>
