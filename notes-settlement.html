@@ -1,0 +1,348 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="description"
+      content="How TripSplit computes a minimal-transfer settlement plan using greedy debtor–creditor matching."
+    />
+    <title>
+      Who pays whom? Inside TripSplit's settlement algorithm — Nicole Goh
+    </title>
+
+    <meta
+      property="og:title"
+      content="Who pays whom? Inside TripSplit's settlement algorithm"
+    />
+    <meta
+      property="og:description"
+      content="How a greedy debtor–creditor matching approach squares up a whole travel group in at most n−1 transfers."
+    />
+    <meta
+      property="og:url"
+      content="https://nicgyc.github.io/notes-settlement.html"
+    />
+    <meta property="og:type" content="article" />
+
+    <link
+      rel="icon"
+      href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%232247E0'/%3E%3Ctext x='32' y='43' font-family='Arial,sans-serif' font-size='32' font-weight='700' fill='white' text-anchor='middle'%3ENG%3C/text%3E%3C/svg%3E"
+    />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Sora:wght@600;700&family=Inter:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --bg: #e7eaef;
+        --card: #ffffff;
+        --ink: #171a21;
+        --body: #3d4552;
+        --dim: #6b7482;
+        --line: #e4e8ef;
+        --accent: #2247e0;
+        --accent-ink: #1b38b4;
+        --accent-soft: #e9eeff;
+        --display: "Sora", sans-serif;
+        --sans:
+          "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        --mono: Consolas, "SF Mono", Menlo, monospace;
+      }
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      body {
+        background: var(--bg);
+        color: var(--body);
+        font-family: var(--sans);
+        font-size: 16.5px;
+        line-height: 1.75;
+        -webkit-font-smoothing: antialiased;
+        padding: 32px 18px 70px;
+      }
+      ::selection {
+        background: var(--accent);
+        color: #fff;
+      }
+      a {
+        color: var(--accent-ink);
+        text-decoration: none;
+      }
+      a:hover {
+        text-decoration: underline;
+      }
+      h1,
+      h2 {
+        font-family: var(--display);
+        color: var(--ink);
+        line-height: 1.25;
+      }
+
+      .page {
+        max-width: 720px;
+        margin: 0 auto;
+      }
+      .back {
+        font-size: 14px;
+        font-weight: 600;
+      }
+      article {
+        background: var(--card);
+        border: 1px solid rgba(255, 255, 255, 0.7);
+        border-radius: 22px;
+        padding: 48px 46px;
+        margin-top: 18px;
+        box-shadow: 0 1px 2px rgba(23, 26, 33, 0.04);
+      }
+      .kicker {
+        font-size: 12px;
+        font-weight: 600;
+        letter-spacing: 2.5px;
+        text-transform: uppercase;
+        color: var(--accent-ink);
+        margin-bottom: 12px;
+      }
+      h1 {
+        font-size: 30px;
+        letter-spacing: -0.5px;
+        margin-bottom: 8px;
+      }
+      .byline {
+        font-size: 13.5px;
+        color: var(--dim);
+        margin-bottom: 30px;
+      }
+      h2 {
+        font-size: 21px;
+        margin: 34px 0 12px;
+        letter-spacing: -0.3px;
+      }
+      p {
+        margin-bottom: 16px;
+      }
+      b {
+        color: var(--ink);
+        font-weight: 600;
+      }
+      pre {
+        background: #171a21;
+        color: #dbe2ee;
+        border-radius: 12px;
+        padding: 20px 22px;
+        overflow-x: auto;
+        font-family: var(--mono);
+        font-size: 13.5px;
+        line-height: 1.6;
+        margin: 18px 0 22px;
+      }
+      code {
+        font-family: var(--mono);
+      }
+      p code,
+      li code {
+        background: var(--accent-soft);
+        color: var(--accent-ink);
+        border-radius: 5px;
+        padding: 1.5px 6px;
+        font-size: 14px;
+      }
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 14px 0 22px;
+        font-size: 15px;
+      }
+      th,
+      td {
+        text-align: left;
+        padding: 9px 12px;
+        border-bottom: 1px solid var(--line);
+      }
+      th {
+        color: var(--ink);
+        font-weight: 600;
+        font-size: 13.5px;
+      }
+      td b {
+        font-family: var(--mono);
+        font-weight: 600;
+      }
+      .callout {
+        background: var(--accent-soft);
+        border-radius: 12px;
+        padding: 16px 20px;
+        font-size: 15px;
+        margin: 18px 0 22px;
+      }
+      .foot {
+        text-align: center;
+        margin-top: 26px;
+        font-size: 13.5px;
+        color: var(--dim);
+      }
+      @media (max-width: 560px) {
+        article {
+          padding: 30px 22px;
+        }
+        h1 {
+          font-size: 25px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="page">
+      <a class="back" href="index.html#writing">← Nicole Goh</a>
+
+      <article>
+        <p class="kicker">Algorithms · C#</p>
+        <h1>Who pays whom? Inside TripSplit's settlement algorithm</h1>
+        <p class="byline">
+          From building
+          <a
+            href="https://github.com/nicgyc/tripsplit"
+            target="_blank"
+            rel="noopener"
+            >TripSplit</a
+          >, a full-stack expense-splitting app (React + ASP.NET Core)
+        </p>
+
+        <p>
+          Splitting a dinner bill is easy. Splitting a five-day trip — where
+          different people paid for different things, and not everyone joined
+          every expense — is where group chats go to die. TripSplit's job is to
+          answer one question at the end of a trip:
+          <b
+            >who should transfer how much to whom, in as few payments as
+            possible?</b
+          >
+        </p>
+
+        <h2>Step 1: reduce everything to one number per person</h2>
+        <p>
+          Every expense has a payer, an amount, and a set of participants. Walk
+          the ledger once: credit the payer the full amount, debit each
+          participant an equal share. Each person ends with a single
+          <b>net balance</b> — positive means the group owes them, negative
+          means they owe the group.
+        </p>
+        <pre><code>foreach (var e in expenses)
+{
+    var share = e.Amount / e.Participants.Count;
+    balances[e.PayerId] += e.Amount;
+    foreach (var p in e.Participants)
+        balances[p.Id] -= share;
+}</code></pre>
+        <p>
+          A useful property falls out of this: the balances always
+          <b>sum to zero</b>. Every dollar credited to a payer is debited from
+          participants. That invariant becomes the first unit test — if it ever
+          breaks, the ledger logic is wrong.
+        </p>
+
+        <h2>Step 2: match debtors to creditors, greedily</h2>
+        <p>
+          Now the history doesn't matter anymore — only the net positions do.
+          Suppose a trip ends like this:
+        </p>
+        <table>
+          <tr>
+            <th>Person</th>
+            <th>Net balance</th>
+          </tr>
+          <tr>
+            <td>Alex</td>
+            <td><b>+60</b> (gets back)</td>
+          </tr>
+          <tr>
+            <td>Bee</td>
+            <td><b>−30</b> (owes)</td>
+          </tr>
+          <tr>
+            <td>Chen</td>
+            <td><b>−30</b> (owes)</td>
+          </tr>
+        </table>
+        <p>
+          The naive answer — everyone pays back everyone they ever shared an
+          expense with — explodes into a mess of tiny transfers. Instead, sort
+          creditors and debtors by size and repeatedly match
+          <b>the largest debtor with the largest creditor</b>, transferring the
+          smaller of the two amounts:
+        </p>
+        <pre><code>while (i &lt; debtors.Count &amp;&amp; j &lt; creditors.Count)
+{
+    var pay = Math.Min(debtors[i].Amount, creditors[j].Amount);
+    result.Add(new Settlement(debtors[i].Id, creditors[j].Id, pay));
+
+    debtors[i].Amount   -= pay;
+    creditors[j].Amount -= pay;
+
+    if (debtors[i].Amount   &lt; Epsilon) i++;
+    if (creditors[j].Amount &lt; Epsilon) j++;
+}</code></pre>
+        <p>
+          Each iteration fully clears at least one person — the debtor, the
+          creditor, or both. With <code>n</code> people holding non-zero
+          balances, that bounds the plan at <b>n − 1 transfers</b>. For Alex,
+          Bee and Chen: two payments of 30 to Alex, done.
+        </p>
+        <div class="callout">
+          Worth knowing: this greedy plan is
+          <b>not always the theoretical minimum</b> number of transfers —
+          finding that is NP-hard (it hides a subset-sum problem). But n−1 is a
+          tight, predictable ceiling, the algorithm is O(n log n), and for real
+          trip sizes the result is effectively optimal. A good trade-off beats a
+          perfect one you can't compute.
+        </div>
+
+        <h2>Step 3: respect the cents</h2>
+        <p>
+          Divide 100 by 3 and someone's share is 33.333… Floating-point drift
+          and rounding can leave people with balances like <code>−0.0033</code>,
+          and a naive loop would happily generate a transfer of $0.00 to fix it.
+          Two decisions handle this:
+        </p>
+        <p>
+          First, money is <code>decimal</code>, never <code>double</code> — C#'s
+          decimal type is base-10 and doesn't accumulate binary representation
+          error. Second, an epsilon of half a cent (<code>0.005m</code>) defines
+          "settled": any residual smaller than that is noise, not debt. One unit
+          test pins this down with the 100/3 case — three people, one expense,
+          exactly two transfers of 33.33, nobody chased for a phantom cent.
+        </p>
+
+        <h2>Why this lives in its own service</h2>
+        <p>
+          In the codebase, all of this sits in a
+          <code>SettlementService</code> with no database, no HTTP, no framework
+          dependencies — pure input to output. The controller fetches the trip,
+          hands people and expenses to the service, and returns the plan. That
+          separation isn't ceremony: it's what makes the algorithm trivially
+          unit-testable, and it means the same logic could back a CLI, a mobile
+          app, or a batch job without touching a line of it.
+        </p>
+        <p>
+          The full implementation and its test suite are in the
+          <a
+            href="https://github.com/nicgyc/tripsplit"
+            target="_blank"
+            rel="noopener"
+            >TripSplit repo</a
+          >.
+        </p>
+      </article>
+
+      <p class="foot">
+        <a href="index.html#writing">← Back to nicgyc.github.io</a> · Written by
+        Nicole Goh
+      </p>
+    </div>
+  </body>
+</html>

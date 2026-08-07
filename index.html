@@ -8,6 +8,32 @@
       content="Software Engineer with 8+ years building enterprise backend systems and cloud-native solutions — C# (.NET), AWS, Google Cloud, ReactJS."
     />
     <title>Nicole Goh — Software Engineer</title>
+
+    <!-- Open Graph: makes the link render as a rich card on LinkedIn / WhatsApp / Telegram -->
+    <meta property="og:title" content="Nicole Goh — Software Engineer" />
+    <meta
+      property="og:description"
+      content="8+ years building enterprise backend systems and cloud-native solutions. C# (.NET) · AWS · Google Cloud · ReactJS."
+    />
+    <meta property="og:url" content="https://nicgyc.github.io/" />
+    <meta property="og:type" content="website" />
+    <meta
+      property="og:image"
+      content="https://avatars.githubusercontent.com/u/313768711?v=4"
+    />
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content="Nicole Goh — Software Engineer" />
+    <meta
+      name="twitter:description"
+      content="8+ years building enterprise backend systems and cloud-native solutions. C# (.NET) · AWS · Google Cloud · ReactJS."
+    />
+
+    <!-- Favicon: inline SVG monogram, no extra file needed -->
+    <link
+      rel="icon"
+      href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%232247E0'/%3E%3Ctext x='32' y='43' font-family='Arial,sans-serif' font-size='32' font-weight='700' fill='white' text-anchor='middle'%3ENG%3C/text%3E%3C/svg%3E"
+    />
+
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -111,13 +137,13 @@
         max-width: 230px;
       }
       .rail nav {
-        margin-top: 48px;
+        margin-top: 40px;
       }
       .rail nav a {
         display: flex;
         align-items: center;
         gap: 12px;
-        padding: 9px 0;
+        padding: 8px 0;
         font-size: 14px;
         font-weight: 500;
         color: var(--dim);
@@ -217,6 +243,12 @@
       #projects .proj {
         border-color: #dbe6e1;
       }
+      #writing {
+        background: #f2effa;
+      }
+      #writing .note-card {
+        border-color: #e2dcf2;
+      }
       #education {
         background: #f7f1e7;
       }
@@ -256,8 +288,39 @@
         color: var(--ink);
         font-weight: 600;
       }
+      .now {
+        margin-top: 26px;
+        display: flex;
+        align-items: flex-start;
+        gap: 10px;
+        background: var(--accent-soft);
+        border-radius: 12px;
+        padding: 14px 18px;
+        font-size: 14.5px;
+      }
+      .now .dot {
+        margin-top: 8px;
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        flex-shrink: 0;
+        background: var(--accent);
+        animation: pulse 2s infinite;
+      }
+      @keyframes pulse {
+        0%,
+        100% {
+          opacity: 1;
+        }
+        50% {
+          opacity: 0.35;
+        }
+      }
+      .now b {
+        color: var(--accent-ink);
+      }
       .stats {
-        margin-top: 34px;
+        margin-top: 26px;
         display: grid;
         grid-template-columns: repeat(3, 1fr);
         gap: 14px;
@@ -278,6 +341,11 @@
         font-size: 13px;
         color: var(--dim);
         margin-top: 2px;
+      }
+      .offclock {
+        margin-top: 22px;
+        font-size: 14px;
+        color: var(--dim);
       }
 
       /* ---------- Skills ---------- */
@@ -392,6 +460,12 @@
         border-color: var(--accent);
         box-shadow: 0 10px 28px rgba(34, 71, 224, 0.1);
       }
+      a.proj {
+        color: inherit;
+      }
+      a.proj:hover {
+        text-decoration: none;
+      }
       .proj h3 {
         font-size: 18px;
         margin-bottom: 8px;
@@ -428,7 +502,65 @@
         transform: translateX(4px);
       }
 
-      /* ---------- Education ---------- */
+      /* ---------- Writing ---------- */
+      .notes {
+        display: grid;
+        gap: 16px;
+      }
+      .note-card {
+        background: var(--card);
+        border: 1px solid var(--line);
+        border-radius: 16px;
+        padding: 26px 28px;
+        display: grid;
+        grid-template-columns: 1fr auto;
+        gap: 6px 20px;
+        transition:
+          transform 0.2s,
+          box-shadow 0.2s,
+          border-color 0.2s;
+        color: inherit;
+      }
+      a.note-card:hover {
+        text-decoration: none;
+        transform: translateY(-3px);
+        border-color: var(--accent);
+        box-shadow: 0 10px 28px rgba(34, 71, 224, 0.1);
+      }
+      .note-card h3 {
+        font-size: 16.5px;
+        margin-bottom: 6px;
+      }
+      .note-card p {
+        font-size: 14.5px;
+        color: var(--dim);
+      }
+      .note-card .meta {
+        grid-column: 1;
+        margin-top: 12px;
+        font-size: 12.5px;
+        font-weight: 600;
+        color: var(--accent-ink);
+      }
+      .note-card .arrow {
+        grid-row: 1 / span 2;
+        align-self: center;
+        font-size: 20px;
+        color: var(--line);
+        transition:
+          color 0.2s,
+          transform 0.2s;
+      }
+      a.note-card:hover .arrow {
+        color: var(--accent);
+        transform: translateX(4px);
+      }
+
+      /* ---------- Education & certifications ---------- */
+      .edu-grid {
+        display: grid;
+        gap: 16px;
+      }
       .edu {
         background: var(--card);
         border: 1px solid var(--line);
@@ -456,6 +588,39 @@
         margin-top: 8px;
         color: var(--dim);
       }
+      .cert-list {
+        grid-column: 1 / -1;
+        margin-top: 10px;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+      }
+      .cert {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        border-bottom: 1px solid var(--line);
+        padding-bottom: 10px;
+        font-size: 14.5px;
+      }
+      .cert:last-child {
+        border-bottom: none;
+        padding-bottom: 0;
+      }
+      .cert .c-name {
+        font-weight: 600;
+        color: var(--ink);
+      }
+      .cert .c-status {
+        font-size: 12px;
+        font-weight: 600;
+        border-radius: 999px;
+        padding: 3px 11px;
+        background: var(--accent-soft);
+        color: var(--accent-ink);
+        white-space: nowrap;
+      }
       .langs {
         margin-top: 18px;
         display: flex;
@@ -465,6 +630,34 @@
       .langs .chip b {
         color: var(--ink);
         font-weight: 600;
+      }
+
+      /* ---------- Testimonials (activate when you have real quotes) ---------- */
+      .quotes {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 16px;
+      }
+      .quote {
+        background: var(--card);
+        border: 1px solid var(--line);
+        border-radius: 16px;
+        padding: 26px;
+        font-size: 14.5px;
+      }
+      .quote .q {
+        font-style: italic;
+      }
+      .quote .who {
+        margin-top: 14px;
+        font-size: 13px;
+        font-weight: 600;
+        color: var(--ink);
+      }
+      .quote .who span {
+        display: block;
+        font-weight: 500;
+        color: var(--dim);
       }
 
       /* ---------- Contact ---------- */
@@ -536,8 +729,12 @@
           transform: none;
           transition: none;
         }
-        .proj:hover {
+        .proj:hover,
+        a.note-card:hover {
           transform: none;
+        }
+        .now .dot {
+          animation: none;
         }
       }
 
@@ -576,6 +773,9 @@
         .stats {
           grid-template-columns: 1fr 1fr;
         }
+        .quotes {
+          grid-template-columns: 1fr;
+        }
         .contact-card {
           padding: 38px 28px;
         }
@@ -601,6 +801,7 @@
             <a href="#skills">Skills</a>
             <a href="#experience">Experience</a>
             <a href="#projects">Projects</a>
+            <a href="#writing">Writing</a>
             <a href="#education">Education</a>
             <a href="#contact">Contact</a>
           </nav>
@@ -648,6 +849,15 @@
             <b>ReactJS</b> and down the stack in
             <b>Docker, Kubernetes and Terraform</b>.
           </p>
+
+          <div class="now">
+            <span class="dot"></span>
+            <span
+              ><b>Now:</b> upgrading myself and deepening my cloud &amp;
+              security skills.</span
+            >
+          </div>
+
           <div class="stats">
             <div class="stat">
               <div class="num">8+</div>
@@ -662,6 +872,11 @@
               <div class="lbl">Core stack</div>
             </div>
           </div>
+
+          <p class="offclock">
+            Off the clock, I'm usually chasing photo spots or planning the next
+            trip.
+          </p>
         </section>
 
         <!-- Skills -->
@@ -835,72 +1050,123 @@
           <p class="kicker">Projects</p>
           <h2 class="sec-h">Things I've built</h2>
           <div class="projects">
-            <!-- <div class="proj">
+            <a
+              class="proj"
+              href="https://github.com/nicgyc/tripsplit"
+              target="_blank"
+              rel="noopener"
+            >
               <div>
                 <h3>TripSplit</h3>
                 <p>
-                  A bill-splitting mobile app for group travel — multi-trip and
-                  multi-currency support, four split modes, receipt photos,
-                  settlement history and Excel export. Built as a PWA and
-                  packaged for iOS and Android app stores via Capacitor.
+                  A full-stack bill-splitting app for group travel. Create
+                  trips, add people and expenses, and get a minimal-transfer
+                  settlement plan computed by a greedy debtor–creditor matching
+                  algorithm. React frontend backed by an ASP.NET Core REST API
+                  with EF Core, SQLite and unit-tested settlement logic.
                 </p>
                 <div class="tags">
-                  <span>React</span><span>PWA</span><span>Capacitor</span>
+                  <span>React</span><span>ASP.NET Core</span><span>EF Core</span
+                  ><span>SQLite</span><span>xUnit</span>
                 </div>
               </div>
               <div class="arrow">→</div>
-            </div>
-
-            <div class="proj">
-              <div>
-                <h3>Invoicing &amp; Accounting Platform</h3>
-                <p>
-                  A mobile-first invoicing and accounting system used daily by a
-                  real cleaning-services business — dashboard, invoice
-                  management, PDF export, Excel import/export and customer
-                  directory. Deployed on Linux/Nginx with a MariaDB schema ready
-                  for backend expansion.
-                </p>
-                <div class="tags">
-                  <span>HTML/JS</span><span>PWA</span><span>Nginx</span
-                  ><span>MariaDB</span>
-                </div>
-              </div>
-              <div class="arrow">→</div>
-            </div>
-
-            <div class="proj">
-              <div>
-                <h3>SAP GUI Automation Suite</h3>
-                <p>
-                  Custom automation tooling that integrated vendor and customer
-                  workflows directly with SAP GUI, eliminating repetitive manual
-                  data entry for manufacturing operations teams.
-                </p>
-                <div class="tags">
-                  <span>C#</span><span>VB.NET</span><span>SAP</span>
-                </div>
-              </div>
-              <div class="arrow">→</div>
-            </div> -->
+            </a>
           </div>
         </section>
 
-        <!-- Education -->
+        <!-- Writing -->
+        <section id="writing" class="reveal">
+          <p class="kicker">Writing</p>
+          <h2 class="sec-h">Notes &amp; write-ups</h2>
+          <div class="notes">
+            <a class="note-card" href="notes-settlement.html">
+              <div>
+                <h3>Who pays whom? Inside TripSplit's settlement algorithm</h3>
+                <p>
+                  How a greedy debtor–creditor matching approach squares up a
+                  whole travel group in at most n−1 transfers — and why sub-cent
+                  rounding needs special care.
+                </p>
+                <div class="meta">Algorithms · C#</div>
+              </div>
+              <div class="arrow">→</div>
+            </a>
+            <!-- Add more write-ups by copying the card above:
+            <a class="note-card" href="notes-your-next-post.html"> ... </a>
+            -->
+          </div>
+        </section>
+
+        <!-- Education & certifications -->
         <section id="education" class="reveal">
           <p class="kicker">Education</p>
-          <h2 class="sec-h">Education &amp; languages</h2>
-          <div class="edu">
-            <div>
-              <h3>Diploma in Business Application</h3>
-              <div class="school">Republic Polytechnic</div>
+          <h2 class="sec-h">Education, certifications &amp; languages</h2>
+          <div class="edu-grid">
+            <!-- Upcoming degree -->
+            <div class="edu">
+              <div>
+                <h3>BSc Information and Communication Technology</h3>
+                <div class="school">
+                  Singapore University of Social Sciences
+                </div>
+              </div>
+              <div class="when">Jan 2027 intake</div>
+              <p>Application submitted — pending approval.</p>
             </div>
-            <div class="when">2013</div>
-            <p>
-              Key focus areas: Database Systems (A), Mathematics II (A),
-              Introduction to Programming (B+), Data Communications &amp;
-              Networking (B+).
-            </p>
+
+            <!-- Completed diploma -->
+            <div class="edu">
+              <div>
+                <h3>Diploma in Business Application</h3>
+                <div class="school">Republic Polytechnic</div>
+              </div>
+              <div class="when">2013</div>
+              <p>
+                Key focus areas: Database Systems (A), Mathematics II (A),
+                Introduction to Programming (B+), Data Communications &amp;
+                Networking (B+).
+              </p>
+            </div>
+
+            <!-- Certifications -->
+            <div class="edu">
+              <div>
+                <h3>Certifications</h3>
+                <div class="school">Professional development</div>
+              </div>
+              <div class="when"></div>
+              <div class="cert-list">
+                <div class="cert">
+                  <span class="c-name"
+                    >Google Cloud Professional Data Engineer</span
+                  >
+                  <span class="c-status">Certified</span>
+                </div>
+                <div class="cert">
+                  <span class="c-name">MongoDB for Developers</span>
+                  <span class="c-status">Certified</span>
+                </div>
+                <div class="cert">
+                  <span class="c-name">Docker and Kubernetes</span>
+                  <span class="c-status">Certified</span>
+                </div>
+                <div class="cert">
+                  <span class="c-name">Cyber Security Fundamentals</span>
+                  <span class="c-status">Certified</span>
+                </div>
+                <div class="cert">
+                  <span class="c-name"
+                    >Business Continuity Management System Awareness</span
+                  >
+                  <span class="c-status">Certified</span>
+                </div>
+                <div class="cert">
+                  <span class="c-name">Fishbone Quality Method E-learning</span>
+                  <span class="c-status">Certified</span>
+                </div>
+              </div>
+            </div>
           </div>
           <div class="langs">
             <span class="chip"><b>English</b> · Intermediate</span>
@@ -909,6 +1175,25 @@
           </div>
         </section>
 
+        <!-- Testimonials: UNCOMMENT this section once you have real quotes
+             (ask a former manager or teammate — LinkedIn recommendations work well).
+             Never publish placeholder quotes.
+        <section id="testimonials" class="reveal">
+          <p class="kicker">Testimonials</p>
+          <h2 class="sec-h">What colleagues say</h2>
+          <div class="quotes">
+            <div class="quote">
+              <p class="q">"Quote text here."</p>
+              <p class="who">Colleague Name<span>Title, Company</span></p>
+            </div>
+            <div class="quote">
+              <p class="q">"Second quote here."</p>
+              <p class="who">Colleague Name<span>Title, Company</span></p>
+            </div>
+          </div>
+        </section>
+        -->
+
         <!-- Contact -->
         <section id="contact" class="reveal">
           <div class="contact-card">
@@ -916,8 +1201,8 @@
             <h2>Let's build something reliable.</h2>
             <p>
               I'm always open to discussing new opportunities, interesting
-              projects, or ways to make systems faster and more resilient. My
-              inbox is open — say hello.
+              projects, or exploring new tech stake or technology. My inbox is
+              open — say hello.
             </p>
             <a class="btn" href="mailto:nic.1992@hotmail.com">Say Hello</a>
             <div class="links">
@@ -946,6 +1231,12 @@
         </footer>
       </main>
     </div>
+
+    <!-- Analytics: free privacy-friendly option is GoatCounter (goatcounter.com).
+         1. Sign up and pick a code, e.g. "nicgyc"
+         2. Uncomment the line below and replace MYCODE with your code
+    <script data-goatcounter="https://MYCODE.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+    -->
 
     <script>
       // Reveal on scroll
