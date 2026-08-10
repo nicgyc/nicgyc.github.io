@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="How NavTranslate separates live speech, third-party translation and private conversation history." />
+    <title>Designing privacy boundaries for a live translator &mdash; Nicole Goh</title>
+    <meta property="og:title" content="Designing privacy boundaries for a live translator" />
+    <meta property="og:description" content="How NavTranslate keeps guest sessions temporary and authenticated history ownership-scoped." />
+    <meta property="og:url" content="https://nicgyc.github.io/notes-live-translator.html" />
+    <meta property="og:type" content="article" />
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%232247E0'/%3E%3Ctext x='32' y='43' font-family='Arial,sans-serif' font-size='32' font-weight='700' fill='white' text-anchor='middle'%3ENG%3C/text%3E%3C/svg%3E" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Sora:wght@600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+    <style>
+      :root{--bg:#e7eaef;--card:#fff;--ink:#171a21;--body:#3d4552;--dim:#6b7482;--line:#e4e8ef;--accent:#2247e0;--accent-ink:#1b38b4;--accent-soft:#e9eeff;--display:"Sora",sans-serif;--sans:"Inter",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;--mono:Consolas,"SF Mono",Menlo,monospace}
+      *{margin:0;padding:0;box-sizing:border-box}body{background:var(--bg);color:var(--body);font-family:var(--sans);font-size:16.5px;line-height:1.75;-webkit-font-smoothing:antialiased;padding:32px 18px 70px}::selection{background:var(--accent);color:#fff}a{color:var(--accent-ink);text-decoration:none}a:hover{text-decoration:underline}
+      .page{max-width:780px;margin:0 auto}.back{display:inline-block;margin:0 0 18px 4px;font-size:14px;font-weight:600}article{background:var(--card);border-radius:18px;padding:54px 64px;box-shadow:0 12px 35px rgba(18,28,45,.08)}
+      .kicker{font-size:12px;font-weight:700;letter-spacing:.13em;text-transform:uppercase;color:var(--accent);margin-bottom:10px}h1,h2{font-family:var(--display);color:var(--ink);line-height:1.25}h1{font-size:34px;letter-spacing:-.035em;margin-bottom:12px}h2{font-size:21px;margin:36px 0 12px}.byline{color:var(--dim);font-size:14px;margin-bottom:32px;padding-bottom:24px;border-bottom:1px solid var(--line)}p{margin:0 0 18px}b,strong{color:var(--ink)}code{font-family:var(--mono);font-size:.9em;background:#f0f2f6;color:#283249;padding:2px 5px;border-radius:4px}pre{background:#171a21;color:#e7ecf5;padding:20px 22px;border-radius:10px;overflow-x:auto;margin:18px 0 22px;line-height:1.6}pre code{background:none;color:inherit;padding:0}.callout{background:var(--accent-soft);border-left:4px solid var(--accent);padding:18px 20px;border-radius:0 9px 9px 0;margin:22px 0;color:#293557}.flow{width:100%;border-collapse:collapse;margin:18px 0 22px}.flow th,.flow td{text-align:left;border-bottom:1px solid var(--line);padding:10px 12px}.flow th{color:var(--ink);font-size:13px}.foot{text-align:center;margin-top:26px;font-size:13.5px;color:var(--dim)}
+      @media(max-width:560px){article{padding:30px 22px}h1{font-size:25px}.flow{font-size:13px}.flow th,.flow td{padding:8px 6px}}
+    </style>
+  </head>
+  <body>
+    <div class="page">
+      <a class="back" href="index.html#writing">&larr; Nicole Goh</a>
+      <article>
+        <p class="kicker">Architecture &middot; Next.js &middot; Security</p>
+        <h1>Designing privacy boundaries for a live translator</h1>
+        <p class="byline">From building <a href="https://github.com/nicgyc/live-translator" target="_blank" rel="noopener">NavTranslate</a>, a live speech and text translator built with Next.js and PostgreSQL</p>
+
+        <p>A translator handles data people naturally assume is private: microphone input, typed messages and a searchable record of past conversations. The interesting engineering problem was therefore not just <b>how to translate text</b>, but where that text is allowed to travel, when it is stored and who can retrieve it later.</p>
+
+        <h2>Start by drawing the data boundaries</h2>
+        <p>NavTranslate has four distinct trust zones. Keeping them explicit makes each privacy decision testable instead of leaving it as a vague promise in the interface.</p>
+        <table class="flow">
+          <tr><th>Zone</th><th>What it handles</th><th>Persistence</th></tr>
+          <tr><td>Browser</td><td>Microphone recognition and UI state</td><td>Current session</td></tr>
+          <tr><td>Next.js server</td><td>Validation, rate limits and routing</td><td>None by default</td></tr>
+          <tr><td>Translation provider</td><td>Text submitted for translation</td><td>Provider-dependent</td></tr>
+          <tr><td>PostgreSQL</td><td>Authenticated account history</td><td>Until deleted</td></tr>
+        </table>
+        <pre><code>Browser speech -&gt; transcript -&gt; POST /api/translate
+                                  |-- provider
+                                  `-- history, only for an authenticated user</code></pre>
+        <p>The Web Speech API turns speech into text in the browser. Browser implementations may still use a cloud recognition service, so the interface should never claim that audio is guaranteed to stay on-device. Once a final transcript exists, the app sends text&mdash;not a recording&mdash;through its own server route for translation.</p>
+
+        <h2>Guest mode should be genuinely temporary</h2>
+        <p>Requiring an account before someone can test a translator adds friction and encourages unnecessary data collection. Guests can therefore use every core translation feature, but their recent items live in <code>sessionStorage</code>. They are scoped to the current tab and disappear with the browser session.</p>
+        <p>That choice also simplifies the server contract: an unauthenticated request can translate, but it cannot create a database record. Logging in changes the storage capability, not the quality of the translation.</p>
+        <div class="callout"><b>Privacy is a backend rule, not a label.</b> The server independently checks the signed session and the account's save-history setting before writing. A modified client cannot turn a guest request into stored account history.</div>
+
+        <h2>Every history query carries ownership</h2>
+        <p>Authenticated history introduces a classic multi-tenant failure mode: looking up a conversation by its ID alone. An unpredictable ID is not authorization. Reads and deletes must include the session's user ID in the database predicate.</p>
+        <pre><code>const conversation = await prisma.conversation.findFirst({
+  where: { id: conversationId, userId: session.userId }
+});</code></pre>
+        <p>The same rule applies to search, delete-one and delete-all operations. The route obtains identity from a signed, HTTP-only cookie, never from a user ID supplied by the browser. Passwords are hashed with bcrypt, while the cookie is <code>SameSite=Lax</code> and marked secure in production.</p>
+
+        <h2>Keep providers behind one narrow route</h2>
+        <p>The default provider, MyMemory, accepts relatively small UTF-8 requests. NavTranslate splits longer input on character boundaries while measuring encoded bytes, translates each chunk and reassembles the response. This avoids cutting through a multi-byte character&mdash;especially important for Mandarin, Japanese and Korean.</p>
+        <p>Both the free provider and the optional OpenAI path sit behind <code>/api/translate</code>. Zod enforces the language pair, mode and 4,000-character limit; an IP-based limiter contains abuse; timeouts prevent stalled upstream calls; and logs record the error type without copying the user's text.</p>
+        <p>For an LLM provider, the instruction also says to treat submitted text as content rather than commands. Translation input is untrusted input, even when it looks like a prompt.</p>
+
+        <h2>The honest limits matter</h2>
+        <p>This architecture reduces exposure, but it does not make translation confidential by magic. The chosen speech engine and translation provider remain data processors. An in-memory rate limiter only protects one application instance, and account recovery, CSRF hardening and encrypted history would be required before treating the app as a mature public service.</p>
+        <p>Those limitations are documented because a security boundary is useful only when users and future maintainers know exactly where it ends. The full implementation is in the <a href="https://github.com/nicgyc/live-translator" target="_blank" rel="noopener">NavTranslate repository</a>.</p>
+      </article>
+      <p class="foot"><a href="index.html#writing">&larr; Back to nicgyc.github.io</a> &middot; Written by Nicole Goh</p>
+    </div>
+  </body>
+</html>
